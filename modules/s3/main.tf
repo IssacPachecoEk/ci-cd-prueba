@@ -25,9 +25,11 @@ resource "aws_s3_bucket_ownership_controls" "bucket_ownership_controls" {
     object_ownership = var.bucket_object_ownership
   }
 }
-# subir el archivo index.html del frontend al bucket
-# resource "aws_s3_object" "object" {
-#   bucket = aws_s3_bucket.main.bucket
-#   key    = "frontend"
-#   source = "${path.module}/code/frontend"
-# }
+
+#subir el archivo index.html del frontend al bucket
+resource "aws_s3_object" "object" {
+  bucket     = aws_s3_bucket.main.bucket
+  key        = "index.html"
+  source     = "${path.module}/../../code/frontend"
+  depends_on = [aws_s3_bucket.main]
+}

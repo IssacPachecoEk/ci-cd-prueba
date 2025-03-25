@@ -62,13 +62,13 @@ output "api_url" {
   value = "https://${aws_api_gateway_rest_api.APIFraternitas.id}.execute-api.us-east-1.amazonaws.com/api"
 }
 
-# resource "aws_api_gateway_domain_name" "custom_domain" {
-#   domain_name     = var.domain_name
-#   certificate_arn = var.arn_certificate
-# }
+resource "aws_api_gateway_domain_name" "custom_domain" {
+  domain_name     = var.domain_name
+  certificate_arn = var.arn_certificate
+}
 
-# resource "aws_api_gateway_base_path_mapping" "path_mapping" {
-#   domain_name = aws_api_gateway_domain_name.custom_domain.domain_name
-#   rest_api_id = aws_api_gateway_rest_api.APIFraternitas.id
-#   stage_name  = aws_api_gateway_stage.stage_api.stage_name
-# }
+resource "aws_api_gateway_base_path_mapping" "path_mapping" {
+  domain_name = aws_api_gateway_domain_name.custom_domain.domain_name
+  rest_api_id = aws_api_gateway_rest_api.APIFraternitas.id
+  stage_name  = aws_api_gateway_stage.stage_api.stage_name
+}

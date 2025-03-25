@@ -8,7 +8,7 @@
   <div id="respuesta"></div>
 
   <script>
-    fetch('https://fraternitas.com/api/hello')
+    fetch('https://fraternitas.com/api/hola')
       .then(response => response.json())
       .then(data => {
         document.getElementById('respuesta').innerHTML = JSON.stringify(data);

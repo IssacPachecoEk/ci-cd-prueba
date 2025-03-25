@@ -78,6 +78,7 @@ module "bucket" {
   ignore_public_acls        = var.ignore_public_acls
   restrict_public_buckets   = var.restrict_public_buckets
   bucket_object_ownership   = var.bucket_object_ownership
+  common_tag                = local.common_tag
 }
 
 module "api_gateway" {
@@ -86,6 +87,7 @@ module "api_gateway" {
   invoke_arn           = module.lambda.output_arn_lambda_fraternitas
   name_lambda          = module.lambda.output_name_lambda_fraternitas
   routes_api_endpoints = var.routes_api_endpoints
+  domain_name          = var.domain_name
   arn_certificate      = module.dns.aws_acm_certificate.cert.arn
   depends_on           = [module.lambda, module.dns]
 }

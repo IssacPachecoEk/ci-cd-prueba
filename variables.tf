@@ -14,6 +14,7 @@ variable "ephemeral_storage_size" {}
 variable "handler" {}
 variable "runtime_version" {}
 # vpc
+variable "app" {}
 variable "tags_vpc" {}
 variable "vpc_name" {}
 variable "vpc_cidr" {}

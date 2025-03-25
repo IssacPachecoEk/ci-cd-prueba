@@ -22,12 +22,12 @@ variable "name_lambda" {
   description = "name de la lambda"
 }
 
-# variable "domain_name" {
-#   type        = string
-#   description = "Nombre del dominio"
-# }
+variable "domain_name" {
+  type        = string
+  description = "Nombre del dominio"
+}
 
-# variable "arn_certificate" {
-#   type        = string
-#   description = "Nombre del dominio"
-# }
+variable "arn_certificate" {
+  type        = string
+  description = "Nombre del dominio"
+}

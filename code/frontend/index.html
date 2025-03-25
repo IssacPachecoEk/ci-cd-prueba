@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Consumir API</title>
+</head>
+<body>
+  <h1>Respuesta del API</h1>
+  <div id="respuesta"></div>
+
+  <script>
+    fetch('https://fraternitas.com/api/hello')
+      .then(response => response.json())
+      .then(data => {
+        document.getElementById('respuesta').innerHTML = JSON.stringify(data);
+      })
+      .catch(error => {
+        document.getElementById('respuesta').innerHTML = 'Error: ' + error;
+      });
+  </script>
+</body>
+</html>

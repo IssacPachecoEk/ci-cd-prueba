@@ -1,0 +1,14 @@
+terraform.tfvars
+.terraform
+.infracost
+.terraform.lock.hcl
+*.tfvars
+*.tfstate
+*.tfstate.backup
+terraform.tfstate.backup
+.tfstate.backup
+terraform.tfstate
+*.zip
+capa_lambda
+python
+venv

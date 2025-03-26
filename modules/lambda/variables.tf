@@ -38,9 +38,9 @@ variable "retention_in_days" {
   description = "tiempo de rentencion de los logs"
 }
 
-variable "subnets_for_lambda" {
-  type    = list(string)
-}
-variable "sg_for_lambda" {
-  type    = string
-}
+# variable "subnets_for_lambda" {
+#   type    = list(string)
+# }
+# variable "sg_for_lambda" {
+#   type    = string
+# }

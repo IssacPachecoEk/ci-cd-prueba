@@ -1,16 +1,11 @@
-resource "aws_iam_role_policy" "policy_lambda_fraternitas" {
-  name = var.name_policy
-  role = aws_iam_role.role_lambda_fraternitas.id
-  policy = jsonencode({
-    Version = "2012-10-17"
-    Statement = [
-        {
-          Action = var.iam_action_permission
-          Resource = var.iam_resource_permission
-          Effect   = "Allow"
-        }
-      ]
-  })
+resource "aws_iam_role_policy_attachment" "lambda_policy_basic_execution_role" {
+  role       = aws_iam_role.role_lambda_fraternitas.name
+  policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+}
+
+resource "aws_iam_role_policy_attachment" "lambda_policy_lambda_role" {
+  role       = aws_iam_role.role_lambda_fraternitas.name
+  policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaRole"
 }
 
 resource "aws_iam_role" "role_lambda_fraternitas" {
@@ -22,7 +17,7 @@ resource "aws_iam_role" "role_lambda_fraternitas" {
         Sid    = ""
         Effect = "Allow"
         Principal = {
-          Service = var.iam_role_services
+          Service = "lambda.amazonaws.com"
         }
         Action = "sts:AssumeRole"
       }

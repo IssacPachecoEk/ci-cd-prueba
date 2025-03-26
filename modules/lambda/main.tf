@@ -4,28 +4,22 @@ resource "null_resource" "build_layer" {
     build_time = timestamp()
   }
   provisioner "local-exec" {
-    command = "python -m venv venv"
-  }
-  provisioner "local-exec" {
-    command = "venv\\Scripts\\activate.bat"
-  }
-  provisioner "local-exec" {
     command = "pip install pydantic-core --platform manylinux2014_x86_64 -t capa_lambda --only-binary=:all:"
   }
   provisioner "local-exec" {
     command = "pip install fastapi mangum -t capa_lambda"
   }
   provisioner "local-exec" {
-  command     = "mkdir python\\lib\\python3.12\\site-packages"
-  interpreter = ["cmd", "/C"]
+  command     = "mkdir -p python/lib/python3.12/site-packages"
+  interpreter = ["bash", "-c"]
   }
   provisioner "local-exec" {
-    command     = "xcopy /y /s capa_lambda\\* python\\lib\\python3.12\\site-packages\\"
-    interpreter = ["cmd", "/C"]
+  command     = "mv capa_lambda/* python/lib/python3.12/site-packages/"
+  interpreter = ["bash", "-c"]
   }
   provisioner "local-exec" {
-  command     = "powershell Compress-Archive -Path python -DestinationPath python.zip"
-  interpreter = ["powershell", "-Command"]
+  command     = "zip -r python.zip python"
+  interpreter = ["bash", "-c"]
   }
 }
 # creacion de la capa lambda
@@ -55,10 +49,10 @@ resource "aws_lambda_function" "lambda_backend_fraternitas" {
   ephemeral_storage {
     size = var.ephemeral_storage_size
   }
-  vpc_config {
-    subnet_ids         = var.subnets_for_lambda
-    security_group_ids = [var.sg_for_lambda]
-  }
+  # vpc_config {
+  #   subnet_ids         = var.subnets_for_lambda
+  #   security_group_ids = [var.sg_for_lambda]
+  # }
   memory_size       = var.memory_size
   timeout           = var.timeout
   environment {

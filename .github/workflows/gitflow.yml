@@ -32,10 +32,12 @@ jobs:
           secret_value=$(aws secretsmanager get-secret-value --secret-id ${{ secrets.NAME_SECRET_MANAGER }} --query SecretString --output text)
           echo "$secret_value" | jq -r '
           to_entries | .[] | 
-          if .value | test("^\\[.*\\]$") then 
+          if .value | test("^\\{.*\\}$") then 
+            "\(.key) = \(.value | gsub("\""; "\""))" 
+          elif .value | test("^\\[.*\\]$") then 
             "\(.key) = \(.value | gsub("\""; "\""))" 
           else 
-            "\(.key) = \"\(.value)\"" 
+            "\(.key) = \"\(.value)\""
           end
           ' >> "./terraform.tfvars"
           cat ./terraform.tfvars
